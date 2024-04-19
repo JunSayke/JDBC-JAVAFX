@@ -3,20 +3,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jdbcjavafx.MainController">
-   <children>
-      <AnchorPane fx:id="pnHome" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
-         <children>
-            <Label layoutX="14.0" layoutY="14.0" text="Welcome" />
-            <Label fx:id="lblUsername" layoutX="83.0" layoutY="14.0" text="Label" />
-            <Button fx:id="btnLogout" layoutX="534.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onLogoutButtonClick" text="Logout" />
-            <Button fx:id="btnDeleteAccount" layoutX="428.0" layoutY="10.0" mnemonicParsing="false" text="Delete Account" />
-            <Button fx:id="btnUpdateProfile" layoutX="254.0" layoutY="226.0" mnemonicParsing="false" text="Update Profile" />
-            <Label layoutX="271.0" layoutY="110.0" text="Edit Profile" />
-            <PasswordField fx:id="tfPassword" layoutX="226.0" layoutY="188.0" promptText="Password" />
-            <TextField fx:id="tfUsername" layoutX="226.0" layoutY="146.0" promptText="Username" />
-            <Button fx:id="btnShowPassword" layoutX="384.0" layoutY="188.0" mnemonicParsing="false" text="Show" />
-         </children>
-      </AnchorPane>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.jdbcjavafx.MainController">
+    <children>
+        <AnchorPane fx:id="pnHome" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                    prefHeight="400.0" prefWidth="600.0">
+            <children>
+                <Label layoutX="14.0" layoutY="14.0" text="Welcome"/>
+                <Label fx:id="lblUsername" layoutX="83.0" layoutY="14.0" text="Label"/>
+                <Button fx:id="btnLogout" layoutX="534.0" layoutY="10.0" mnemonicParsing="false"
+                        onMouseClicked="#onLogoutButtonClick" text="Logout"/>
+                <Button fx:id="btnDeleteAccount" layoutX="428.0" layoutY="10.0" mnemonicParsing="false"
+                        text="Delete Account"/>
+                <Button fx:id="btnUpdateProfile" layoutX="254.0" layoutY="226.0" mnemonicParsing="false"
+                        text="Update Profile"/>
+                <Label layoutX="271.0" layoutY="110.0" text="Edit Profile"/>
+                <PasswordField fx:id="tfPassword" layoutX="226.0" layoutY="188.0" promptText="Password"/>
+                <TextField fx:id="tfUsername" layoutX="226.0" layoutY="146.0" promptText="Username"/>
+                <Button fx:id="btnShowPassword" layoutX="384.0" layoutY="188.0" mnemonicParsing="false" text="Show"/>
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>

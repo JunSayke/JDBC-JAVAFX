@@ -7,5 +7,4 @@ module com.example.jdbcjavafx {
 
     opens com.example.jdbcjavafx to javafx.fxml;
     exports com.example.jdbcjavafx;
-    opens com.example.jdbcjavafx.applications to javafx.fxml;
 }

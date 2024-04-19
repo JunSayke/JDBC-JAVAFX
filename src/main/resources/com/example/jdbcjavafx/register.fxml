@@ -3,18 +3,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jdbcjavafx.MainController">
-   <children>
-      <AnchorPane fx:id="pnRegister" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
-         <children>
-            <PasswordField fx:id="tfPassword" layoutX="219.0" layoutY="200.0" promptText="Password" />
-            <TextField fx:id="tfUsername" layoutX="219.0" layoutY="162.0" promptText="Username" />
-            <Button fx:id="btnRegister" layoutX="264.0" layoutY="241.0" mnemonicParsing="false" text="Register" />
-            <Button fx:id="btnShowPassword" layoutX="384.0" layoutY="200.0" mnemonicParsing="false" text="Show" />
-            <Label layoutX="265.0" layoutY="130.0" text="Register User" />
-            <Label layoutX="201.0" layoutY="279.0" text="Already have an account?" />
-            <Label fx:id="btnToLogin" layoutX="344.0" layoutY="279.0" onMouseClicked="#onToLoginButtonClick" text="Click here!" />
-         </children>
-      </AnchorPane>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jdbcjavafx.MainController">
+    <children>
+        <AnchorPane fx:id="pnRegister" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+            <children>
+                <PasswordField fx:id="tfPassword" layoutX="219.0" layoutY="200.0" promptText="Password" />
+                <TextField fx:id="tfUsername" layoutX="219.0" layoutY="162.0" promptText="Username" />
+                <Button fx:id="btnRegister" layoutX="264.0" layoutY="241.0" mnemonicParsing="false" text="Register" />
+                <Button fx:id="btnShowPassword" layoutX="384.0" layoutY="200.0" mnemonicParsing="false" text="Show" />
+                <Label layoutX="265.0" layoutY="130.0" text="Register User" />
+                <Label layoutX="195.0" layoutY="279.0" text="Already have an account?" />
+                <Label fx:id="btnToLogin" layoutX="338.0" layoutY="279.0" onMouseClicked="#onToLoginButtonClick" text="Click here!" />
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>
