@@ -4,17 +4,14 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jdbcjavafx.MainController">
-    <children>
-        <AnchorPane fx:id="pnLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
-            <children>
-                <PasswordField fx:id="tfPassword" layoutX="219.0" layoutY="200.0" promptText="Password" />
-                <TextField fx:id="tfUsername" layoutX="219.0" layoutY="162.0" promptText="Username" />
-                <Button fx:id="btnLogin" layoutX="271.0" layoutY="240.0" mnemonicParsing="false" onAction="#onToHomepageButtonClick" text="Login" />
-                <Button fx:id="btnShowPassword" layoutX="384.0" layoutY="200.0" mnemonicParsing="false" text="Show" />
-                <Label layoutX="265.0" layoutY="130.0" text="Login User" />
-                <Label layoutX="199.0" layoutY="280.0" text="Don't have an account?" />
-                <Label fx:id="btnToRegister" layoutX="335.0" layoutY="280.0" onMouseClicked="#onToRegisterButtonClick" text="Click here!" />
-            </children>
-        </AnchorPane>
-    </children>
+    <AnchorPane fx:id="pnLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+        <TextField fx:id="tfUsername" layoutX="219.0" layoutY="162.0" promptText="Username" />
+        <PasswordField fx:id="tfPassword" layoutX="219.0" layoutY="200.0" promptText="Password" />
+        <Button fx:id="btnLogin" layoutX="271.0" layoutY="240.0" mnemonicParsing="false" onAction="#onLoginButtonClick" text="Login" />
+        <Button fx:id="btnShowPassword" layoutX="384.0" layoutY="200.0" mnemonicParsing="false" text="Show" />
+        <Label layoutX="265.0" layoutY="130.0" text="Login User" textAlignment="CENTER" />
+        <Label layoutX="199.0" layoutY="280.0" text="Don't have an account?" />
+        <Label fx:id="btnToRegister" layoutX="335.0" layoutY="280.0" onMouseClicked="#onToRegisterButtonClick" text="Click here!" />
+        <Label fx:id="lblFeedback" alignment="CENTER" layoutX="220.0" layoutY="99.0" prefHeight="17.0" prefWidth="149.0" textAlignment="JUSTIFY" />
+    </AnchorPane>
 </AnchorPane>

@@ -1,16 +1,12 @@
 package com.example.jdbcjavafx.datas;
 
 public class UserData {
-    private int id;
-    private String username, email;
-    public UserData(int id, String username) {
-        this(id, username, null);
-    }
+    private final int id;
+    private final String username;
 
-    public UserData(int id, String username, String email) {
+    public UserData(int id, String username) {
         this.id = id;
         this.username = username;
-        this.email = email;
     }
 
     public int getId() {
@@ -19,9 +15,5 @@ public class UserData {
 
     public String getUsername() {
         return username;
-    }
-
-    public String getEmail() {
-        return email;
     }
 }
