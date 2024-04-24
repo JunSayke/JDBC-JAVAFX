@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jdbcjavafx.FlashcardController">
+<AnchorPane fx:id="pnFlashcardList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+   <VBox alignment="CENTER" layoutX="18.0" layoutY="37.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="327.0" prefWidth="565.0" spacing="20.0">
+      <children>
+         <Label text="YOUR FLASHCARDS">
+            <font>
+               <Font name="System Bold" size="24.0" />
+            </font>
+         </Label>
+            <TableView fx:id="tblFlashcards" prefHeight="257.0" prefWidth="565.0">
+              <columns>
+                <TableColumn fx:id="tblFlashcard" prefWidth="397.0" text="FLASHCARDS" />
+                <TableColumn fx:id="tblAction" prefWidth="167.0" text="ACTIONS" />
+              </columns>
+            </TableView>
+      </children>
+   </VBox>
+</AnchorPane>
+</AnchorPane>

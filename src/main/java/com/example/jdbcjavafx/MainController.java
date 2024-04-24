@@ -1,40 +1,65 @@
 package com.example.jdbcjavafx;
 
 import com.example.jdbcjavafx.datas.UserData;
-import com.example.jdbcjavafx.mysqlconnection.MySqlConnection;
+import com.example.jdbcjavafx.sqlquery.UserTable;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import org.kordamp.bootstrapfx.BootstrapFX;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
 
 public class MainController {
     @FXML
-    public AnchorPane pnHome, pnLogin, pnRegister;
-    public PasswordField tfPassword;
+    public AnchorPane pnLogin, pnRegister;
+    @FXML
+    public TextField tfMaskPassword;
+    @FXML
+    public TextField tfUnmaskPassword;
+    @FXML
     public TextField tfUsername;
-    public Button btnRegister;
+    @FXML
     public Button btnShowPassword;
+    @FXML
     public Label btnToLogin;
+    @FXML
     public Button btnLogin;
-    public Label lblUsername;
+    @FXML
     public Label btnToRegister;
-    public Button btnLogout;
-    public Button btnDeleteAccount;
-    public Button btnUpdateProfile;
-    public Label lblFeedback;
 
-    private static UserData userData;
+    @FXML
+    protected void onMaskPasswordInputListener() {
+        tfUnmaskPassword.setText(tfMaskPassword.getText());
+    }
+
+    @FXML
+    protected void onUnmaskPasswordInputListener() {
+        tfMaskPassword.setText(tfUnmaskPassword.getText());
+    }
+
+    @FXML
+    protected void onShowPasswordPressed() {
+        tfMaskPassword.setVisible(false);
+        tfUnmaskPassword.setVisible(true);
+    }
+
+    @FXML
+    protected void onShowPasswordReleased() {
+        tfMaskPassword.setVisible(true);
+        tfUnmaskPassword.setVisible(false);
+    }
 
     @FXML
     protected void onToRegisterButtonClick() throws IOException {
@@ -53,70 +78,71 @@ public class MainController {
     }
 
     @FXML
-    protected void onLogoutButtonClick() throws IOException {
-        MainController.userData = null;
-        AnchorPane p = (AnchorPane) pnHome.getParent();
-        Parent scene = FXMLLoader.load(getClass().getResource("login.fxml"));
-        p.getChildren().clear();
-        p.getChildren().add(scene);
+    protected void onLoginButtonClick() throws IOException {
+        String username = tfUsername.getText();
+        String password = tfMaskPassword.getText();
+
+        UserData userData = UserTable.getInstance().loginUser(username, password);
+        if (userData != null) {
+            Stage stage = (Stage) pnLogin.getScene().getWindow();
+            stage.setTitle("Home - Flashcard App");
+            feedbackMsgBox(Alert.AlertType.INFORMATION, "Login successfully!");
+            SessionManager.getInstance().setUserData(userData);
+            pnLogin.getScene().setRoot(FXMLLoader.load(getClass().getResource("home.fxml")));
+        } else {
+            feedbackMsgBox(Alert.AlertType.ERROR, "Login failed!");
+        }
     }
 
     @FXML
-    protected void onLoginButtonClick() throws IOException {
-        String username = tfUsername.getText();
-        String password = tfPassword.getText();
-        UserData userData = MySqlConnection.getInstance().loginUser(username, password);
-        if (userData != null) {
-            MainController.userData = userData;
-            AnchorPane p = (AnchorPane) pnLogin.getParent();
-            Parent scene = FXMLLoader.load(getClass().getResource("home.fxml"));
-            ((Label) scene.lookup("#lblUsername")).setText(userData.getUsername());
-            p.getChildren().clear();
-            p.getChildren().add(scene);
-        } else {
-            lblFeedback.setTextFill(Color.RED);
-            lblFeedback.setText("Incorrect Credentials!");
-        }
+    protected void initialize() {
+        Platform.runLater(() -> {
+            if (pnLogin != null) {
+                Stage stage = (Stage) pnLogin.getScene().getWindow();
+                if (!stage.getTitle().equals("Login - Flashcard App"))
+                    stage.setTitle("Login - Flashcard App");
+            } else if (pnRegister != null) {
+                Stage stage = (Stage) pnRegister.getScene().getWindow();
+                if (!stage.getTitle().equals("Register - Flashcard App"))
+                    stage.setTitle("Register - Flashcard App");
+            }
+        });
     }
 
     @FXML
     protected void onRegisterButtonClick() {
-        boolean success = MySqlConnection.getInstance().registerUser(tfUsername.getText(), tfPassword.getText());
-        if (success) {
-            lblFeedback.setTextFill(Color.GREEN);
-            lblFeedback.setText("Registered Successfully!");
-        } else {
-            lblFeedback.setTextFill(Color.RED);
-            lblFeedback.setText("Registration Failed!");
-        }
+        boolean success = UserTable.getInstance().registerUser(tfUsername.getText(), tfMaskPassword.getText());
+
+        if (success)
+            feedbackMsgBox(Alert.AlertType.INFORMATION, "Registration success!");
+        else
+            feedbackMsgBox(Alert.AlertType.ERROR, "Registration failed!");
     }
 
-    @FXML
-    protected void onDeleteAccountButtonClick() throws IOException {
-        boolean success = MySqlConnection.getInstance().deleteAccount(lblUsername.getText());
-        if (success) {
-            onLogoutButtonClick();
-        } else {
-            lblFeedback.setTextFill(Color.RED);
-            lblFeedback.setText("Deletion of Account Failed!");
-        }
-    }
+    private void feedbackMsgBox(Alert.AlertType alertType, String message) {
+        TextFlow alertContainer = new TextFlow();
+        Text text = new Text(message);
+        alertContainer.getChildren().add(text);
 
-    @FXML
-    protected void onUpdateAccountButtonClick() {
-        String username = tfUsername.getText();
-        String password = tfPassword.getText();
-        UserData userData = MySqlConnection.getInstance().updateAccount(MainController.userData.getId(),
-                username.isEmpty() ? null : username,
-                password.isEmpty() ? null : password);
-        if (userData != null) {
-            MainController.userData = userData;
-            lblUsername.setText(userData.getUsername());
-            lblFeedback.setTextFill(Color.GREEN);
-            lblFeedback.setText("Successfully updated user profile!");
-        } else {
-            lblFeedback.setTextFill(Color.RED);
-            lblFeedback.setText("Failed to update user profile!");
-        }
+        if (alertType != Alert.AlertType.INFORMATION)
+            alertContainer.getStyleClass().addAll("alert", "alert-danger");
+        else
+            alertContainer.getStyleClass().addAll("alert", "alert-success");
+
+        GridPane root = new GridPane();
+        root.addRow(0, alertContainer);
+        GridPane.setHgrow(alertContainer, Priority.ALWAYS);
+
+        Alert alert = new Alert(alertType);
+
+        Stage owner = (Stage) (pnLogin != null ? pnLogin.getScene().getWindow() : pnRegister.getScene().getWindow());
+
+        alert.initOwner(owner);
+        alert.initStyle(StageStyle.UNDECORATED);;
+        alert.setTitle("Notification");
+        alert.setHeaderText(null);
+        alert.getDialogPane().setContent(root);
+        alert.getDialogPane().getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        alert.showAndWait();
     }
 }

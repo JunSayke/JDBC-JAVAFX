@@ -2,15 +2,12 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import org.kordamp.bootstrapfx.scene.layout.Panel?>
-
-<?import javafx.geometry.Insets?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jdbcjavafx.MainController">
-    <AnchorPane fx:id="pnRegister" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.text.Font?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jdbcjavafx.HomeController">
+    <AnchorPane fx:id="pnProfile" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
         <VBox alignment="CENTER" layoutX="151.0" layoutY="95.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
             <children>
-                <Label text="REGISTER ACCOUNT">
+                <Label text="EDIT PROFILE">
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
@@ -33,24 +30,7 @@
                                 <PasswordField fx:id="tfMaskPassword" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyTyped="#onMaskPasswordInputListener" promptText="Password" GridPane.rowIndex="1" />
                                 <TextField fx:id="tfUnmaskPassword" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyTyped="#onUnmaskPasswordInputListener" promptText="Password" visible="false" GridPane.rowIndex="1" />
                                 <Button fx:id="btnShowPassword" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMousePressed="#onShowPasswordPressed" onMouseReleased="#onShowPasswordReleased" styleClass="btn-default" text="Show" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Button fx:id="btnLogin" defaultButton="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRegisterButtonClick" prefHeight="32.0" prefWidth="128.0" styleClass="btn-primary" text="Register" textAlignment="CENTER" GridPane.rowIndex="2" />
-                                <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
-                                    <children>
-                                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Already have an account?">
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="btnToLogin" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onToLoginButtonClick" text="Click here!" textFill="#3232ff">
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                    <GridPane.margin>
-                                        <Insets top="20.0" />
-                                    </GridPane.margin>
-                                </HBox>
+                                <Button fx:id="btnUpdateProfile" defaultButton="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onUpdateProfileButtonClick" prefHeight="32.0" prefWidth="128.0" styleClass="btn-primary" text="Update" textAlignment="CENTER" GridPane.rowIndex="2" />
                             </children>
                         </GridPane>
                     </children>
@@ -58,4 +38,6 @@
             </children>
         </VBox>
     </AnchorPane>
+
+
 </AnchorPane>

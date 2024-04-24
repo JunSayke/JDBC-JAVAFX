@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jdbcjavafx.FlashcardController">
+    <AnchorPane fx:id="pnCreateFlashcard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+        <VBox alignment="CENTER" layoutX="61.0" layoutY="55.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="291.0" prefWidth="478.0" spacing="20.0">
+            <children>
+                <Label text="CREATE FLASHCARD">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                    <TextArea fx:id="taFront" maxHeight="1.7976931348623157E308" promptText="Front" />
+                    <TextArea fx:id="taBack" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Back" />
+                    <Button fx:id="btnCreateFlashcard" defaultButton="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCreateFlashcardButtonClick" prefHeight="32.0" prefWidth="128.0" styleClass="btn-primary" text="Create Flashcard" textAlignment="CENTER" />
+            </children>
+        </VBox>
+    </AnchorPane>
+
+
+</AnchorPane>
