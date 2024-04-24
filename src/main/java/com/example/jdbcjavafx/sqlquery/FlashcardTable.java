@@ -1,5 +1,6 @@
 package com.example.jdbcjavafx.sqlquery;
 
+import com.example.jdbcjavafx.SessionManager;
 import com.example.jdbcjavafx.datas.FlashcardData;
 import com.example.jdbcjavafx.mysqlconnection.MySqlConnection;
 
@@ -31,7 +32,7 @@ public class FlashcardTable {
             statement.execute(query);
             System.out.println("Flashcard table created successfully.");
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
@@ -49,7 +50,7 @@ public class FlashcardTable {
                 flashcardId = generatedKeys.getInt(1);
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
         return flashcardId;
     }
@@ -70,27 +71,60 @@ public class FlashcardTable {
                 ));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
         return flashcardDataList;
     }
 
-    public boolean updateFlashcard(int flashcardId, String front, String back) {
-        boolean success = false;
-        try (Connection c = MySqlConnection.getConnection();
-             PreparedStatement statement = c.prepareStatement("UPDATE tblflashcard SET front = ?, back = ? WHERE id = ?")) {
-            statement.setString(1, front);
-            statement.setString(2, back);
-            statement.setInt(3, flashcardId);
+    public FlashcardData updateFlashcard(int flashcardId, String front, String back) {
+        FlashcardData flashcardData = null;
+        try (Connection c = MySqlConnection.getConnection()) {
+            c.setAutoCommit(false);
 
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows > 0)
-                success = true;
+            StringBuilder queryBuilder = new StringBuilder("UPDATE tblflashcard SET ");
+            if (front != null) {
+                queryBuilder.append("front = ?, ");
+            }
+            if (back != null) {
+                queryBuilder.append("back = ?, ");
+            }
+            queryBuilder.delete(queryBuilder.length() - 2, queryBuilder.length());
+            queryBuilder.append(" WHERE id = ?");
+            PreparedStatement preparedStatement = c.prepareStatement(queryBuilder.toString());
+
+            int parameterIndex = 1;
+            if (front != null) {
+                preparedStatement.setString(parameterIndex++, front);
+            }
+            if (back != null) {
+                preparedStatement.setString(parameterIndex++, back);
+            }
+            preparedStatement.setInt(parameterIndex, flashcardId);
+
+            int rows = preparedStatement.executeUpdate();
+
+            if (rows > 0) {
+                try (PreparedStatement selectStatement = c.prepareStatement("SELECT userid, front, back FROM tblflashcard WHERE id = ?")) {
+                    selectStatement.setInt(1, flashcardId);
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    if (resultSet.next()) {
+                        flashcardData = new FlashcardData(
+                                flashcardId,
+                                resultSet.getInt("userid"),
+                                resultSet.getString("front"),
+                                resultSet.getString("back"));
+                    }
+                }
+                c.commit();
+            } else {
+                c.rollback();
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
-        return success;
+        return flashcardData;
     }
+
 
     public boolean deleteFlashcard(int flashcardId) {
         boolean success = false;
@@ -101,7 +135,7 @@ public class FlashcardTable {
             if (affectedRows > 0)
                 success = true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
         return success;
     }

@@ -96,10 +96,15 @@ public class HomeController {
         String username = tfUsername.getText();
         String password = tfMaskPassword.getText();
         UserData userData = UserTable.getInstance().updateAccount(SessionManager.getInstance().getUserData().getId(),
-                username.isEmpty() ? null : username,
-                password.isEmpty() ? null : password);
+                username.isBlank() ? null : username,
+                password.isBlank() ? null : password);
+
+        String changed = username.isBlank() ? "password" :
+                password.isBlank() ? "username" :
+                        "account";
+
         if (userData != null) {
-            feedbackMsgBox(Alert.AlertType.INFORMATION, "Account updated!");
+            feedbackMsgBox(Alert.AlertType.INFORMATION, "Profile " + changed + " updated!");
             SessionManager.getInstance().setUserData(userData);
         } else {
             feedbackMsgBox(Alert.AlertType.ERROR, "Failed to update account!");
@@ -231,7 +236,8 @@ public class HomeController {
         Stage owner = (Stage) (pnHome != null ? pnHome.getScene().getWindow() : pnProfile.getScene().getWindow());
 
         alert.initOwner(owner);
-        alert.initStyle(StageStyle.UNDECORATED);;
+        alert.initStyle(StageStyle.UNDECORATED);
+        ;
         alert.setTitle("Notification");
         alert.setHeaderText(null);
         alert.getDialogPane().setContent(root);

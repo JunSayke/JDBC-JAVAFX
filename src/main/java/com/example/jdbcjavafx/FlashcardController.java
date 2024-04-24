@@ -106,7 +106,7 @@ public class FlashcardController {
                         back.setText(flashcard.getBack());
                         pnFlashcardList.getScene().setRoot(root);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        // e.printStackTrace();
                     }
                 }
 
@@ -168,14 +168,18 @@ public class FlashcardController {
         String front = taFront.getText();
         String back = taBack.getText();
 
-        boolean success = FlashcardTable.getInstance().updateFlashcard(
+        FlashcardData flashcardData = FlashcardTable.getInstance().updateFlashcard(
                 flashcardId,
-                front,
-                back
+                front.isBlank() ? null : front,
+                back.isBlank() ? null : back
         );
 
-        if (success) {
-            feedbackMsgBox(Alert.AlertType.INFORMATION, "Flashcard updated!");
+        String changed = front.isBlank() ? "back" :
+                back.isBlank() ? "front" :
+                        "content";
+
+        if (flashcardData != null) {
+            feedbackMsgBox(Alert.AlertType.INFORMATION, "Flashcard " + changed + " updated!");
         } else {
             feedbackMsgBox(Alert.AlertType.ERROR, "Failed to update flashcard!");
         }
@@ -195,8 +199,8 @@ public class FlashcardController {
 
         int flashcardId = FlashcardTable.getInstance().insertUserFlashcard(
                 SessionManager.getInstance().getUserData().getId(),
-                front,
-                back
+                front.isBlank() ? null : front,
+                back.isBlank() ? null : back
         );
 
         if (flashcardId != -1) {

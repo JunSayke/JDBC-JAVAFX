@@ -28,7 +28,7 @@ public class UserTable {
             statement.execute(query);
             System.out.println("User table created successfully.");
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
@@ -41,7 +41,7 @@ public class UserTable {
             if (resultSet.next() && resultSet.getString("password").equals(password))
                 userData = new UserData(resultSet.getInt("id"), resultSet.getString("username"));
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
         return userData;
     };
@@ -57,7 +57,7 @@ public class UserTable {
                 success = true;
             System.out.println("Rows inserted: " + rows);
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
         return success;
     }
@@ -72,49 +72,52 @@ public class UserTable {
                 success = true;
             System.out.println("Rows deleted: " + rows);
         } catch (SQLException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
         return success;
     }
 
     public UserData updateAccount(int id, String username, String password) {
         UserData userData = null;
-        if (username != null || password != null) {
-            try (Connection c = MySqlConnection.getConnection()) {
-                StringBuilder queryBuilder = new StringBuilder("UPDATE tbluseraccount SET ");
-                if (username != null) {
-                    queryBuilder.append("username = ?, ");
-                }
-                if (password != null) {
-                    queryBuilder.append("password = ?, ");
-                }
-                queryBuilder.delete(queryBuilder.length() - 2, queryBuilder.length());
-                queryBuilder.append(" WHERE id = ?");
-                PreparedStatement preparedStatement = c.prepareStatement(queryBuilder.toString());
+        try (Connection c = MySqlConnection.getConnection()) {
+            c.setAutoCommit(false);
 
-                int parameterIndex = 1;
-                if (username != null) {
-                    preparedStatement.setString(parameterIndex++, username);
-                }
-                if (password != null) {
-                    preparedStatement.setString(parameterIndex++, password);
-                }
-                preparedStatement.setInt(parameterIndex, id);
+            StringBuilder queryBuilder = new StringBuilder("UPDATE tbluseraccount SET ");
+            if (username != null) {
+                queryBuilder.append("username = ?, ");
+            }
+            if (password != null) {
+                queryBuilder.append("password = ?, ");
+            }
+            queryBuilder.delete(queryBuilder.length() - 2, queryBuilder.length());
+            queryBuilder.append(" WHERE id = ?");
+            PreparedStatement preparedStatement = c.prepareStatement(queryBuilder.toString());
 
-                int rows = preparedStatement.executeUpdate();
-                if (rows > 0) {
-                    try (PreparedStatement selectStatement = c.prepareStatement("SELECT username FROM tbluseraccount WHERE id = ?")) {
-                        selectStatement.setInt(1, id);
-                        ResultSet resultSet = selectStatement.executeQuery();
-                        if (resultSet.next()) {
-                            userData = new UserData(id, resultSet.getString("username"));
-                        }
+            int parameterIndex = 1;
+            if (username != null) {
+                preparedStatement.setString(parameterIndex++, username);
+            }
+            if (password != null) {
+                preparedStatement.setString(parameterIndex++, password);
+            }
+            preparedStatement.setInt(parameterIndex, id);
+
+            int rows = preparedStatement.executeUpdate();
+
+            if (rows > 0) {
+                try (PreparedStatement selectStatement = c.prepareStatement("SELECT username FROM tbluseraccount WHERE id = ?")) {
+                    selectStatement.setInt(1, id);
+                    ResultSet resultSet = selectStatement.executeQuery();
+                    if (resultSet.next()) {
+                        userData = new UserData(id, resultSet.getString("username"));
                     }
                 }
-                System.out.println("Rows updated: " + rows);
-            } catch (SQLException e) {
-                e.printStackTrace();
+                c.commit();
+            } else {
+                c.rollback();
             }
+        } catch (SQLException e) {
+            // e.printStackTrace();
         }
         return userData;
     }

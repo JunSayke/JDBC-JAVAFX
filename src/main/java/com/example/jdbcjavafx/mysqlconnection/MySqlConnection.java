@@ -15,7 +15,7 @@ public class MySqlConnection {
             c = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("DB Connected!");
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
         }
         return c;
     }
