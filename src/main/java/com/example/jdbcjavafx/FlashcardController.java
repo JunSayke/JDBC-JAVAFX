@@ -22,21 +22,46 @@ import java.io.IOException;
 import java.util.List;
 
 public class FlashcardController {
+    @FXML
     public AnchorPane pnCreateFlashcard;
+    @FXML
     public TextArea taFront;
+    @FXML
     public Button btnCreateFlashcard;
+    @FXML
     public TextArea taBack;
+    @FXML
     public TableView<FlashcardData> tblFlashcards;
+    @FXML
     public TableColumn<FlashcardData, String> tblFlashcard;
+    @FXML
     public TableColumn<FlashcardData, Void> tblAction;
+    @FXML
     public AnchorPane pnViewFlashcard;
+    @FXML
     public AnchorPane pnFlashcardList;
+    @FXML
     public Button btnUpdateFlashcard;
+    @FXML
     public Label lblFlashcardId;
+    @FXML
     public Button btnReturn;
-
+    @FXML
+    public AnchorPane pnFlashcardReviewer;
+    @FXML
+    public Label lblFront;
+    @FXML
+    public Label lblBack;
+    private static List<FlashcardData> flashcardDataList;
+    private static int flashcardDataListIndex = -1;
     @FXML
     protected void initialize() {
+        if (pnFlashcardReviewer != null) {
+            flashcardDataList = FlashcardTable.getInstance().getUserFlashcards(
+                    SessionManager.getInstance().getUserData().getId()
+            );
+        }
+
         if (tblFlashcards != null) {
             tblFlashcard.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFront()));
 
@@ -100,6 +125,42 @@ public class FlashcardController {
             tblFlashcards.getItems().addAll(flashcardDataList);
         }
     }
+
+    @FXML
+    protected void onNextButtonClick() {
+        if (++flashcardDataListIndex >= flashcardDataList.size()) {
+            feedbackMsgBox(Alert.AlertType.ERROR, "No more flashcards!");
+            flashcardDataListIndex = flashcardDataList.size() - 1;
+        } else {
+            FlashcardData flashcardData = flashcardDataList.get(flashcardDataListIndex);
+            lblFront.setText(flashcardData.getFront());
+            lblBack.setText(flashcardData.getBack());
+        }
+    }
+
+    @FXML
+    protected void onPreviousButtonClick() {
+        if (--flashcardDataListIndex < 0) {
+            feedbackMsgBox(Alert.AlertType.ERROR, "No more flashcards!");
+            flashcardDataListIndex = -1;
+        } else {
+            FlashcardData flashcardData = flashcardDataList.get(flashcardDataListIndex);
+            lblFront.setText(flashcardData.getFront());
+            lblBack.setText(flashcardData.getBack());
+        }
+    }
+
+    @FXML
+    protected void toggleFlashcardFrontBack() {
+        if (lblFront.isVisible()) {
+            lblFront.setVisible(false);
+            lblBack.setVisible(true);
+        } else {
+            lblFront.setVisible(true);
+            lblBack.setVisible(false);
+        }
+    }
+
 
     @FXML
     protected void onUpdateFlashcardButtonClick() {

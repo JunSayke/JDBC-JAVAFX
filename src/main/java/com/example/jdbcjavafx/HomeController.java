@@ -121,7 +121,7 @@ public class HomeController {
     }
 
     @FXML
-    protected void onShowEditProfileButtonClick() throws Exception {
+    protected void onShowEditProfileButtonClick() throws IOException {
         Stage popupStage = new Stage();
         popupStage.setResizable(false);
 
@@ -144,7 +144,30 @@ public class HomeController {
     }
 
     @FXML
-    protected void onShowFlashcardListButtonClick() throws Exception {
+    protected void onShowReviewFlashcardButtonClick() throws IOException {
+        Stage popupStage = new Stage();
+        popupStage.setResizable(false);
+
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setTitle("Flashcard Reviewer - Flashcard App");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("review_flashcard.fxml"));
+        Parent root = loader.load();
+
+        Scene popupScene = new Scene(root);
+        popupScene.getStylesheets().add(BootstrapFX.bootstrapFXStylesheet());
+        popupStage.setScene(popupScene);
+        popupStage.sizeToScene();
+
+        popupStage.setOnCloseRequest(event -> {
+            initialize();
+        });
+
+        popupStage.show();
+    }
+
+    @FXML
+    protected void onShowFlashcardListButtonClick() throws IOException {
         Stage popupStage = new Stage();
         popupStage.setResizable(false);
 
@@ -167,7 +190,7 @@ public class HomeController {
     }
 
     @FXML
-    protected void onShowNewFlashcardButtonClick() throws Exception {
+    protected void onShowNewFlashcardButtonClick() throws IOException {
         Stage popupStage = new Stage();
         popupStage.setResizable(false);
 

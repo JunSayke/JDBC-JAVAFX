@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.jdbcjavafx.FlashcardController">
+    <AnchorPane fx:id="pnFlashcardReviewer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+        <VBox alignment="CENTER" layoutX="61.0" layoutY="55.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="291.0" prefWidth="478.0" spacing="20.0">
+            <children>
+                <Label text="FLASHCARD REVIEWER">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+            <HBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <Button fx:id="btnPrevious" mnemonicParsing="false" onAction="#onPreviousButtonClick" prefWidth="100.0" styleClass="btn-default" text="Previous">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
+                  <Button fx:id="btnNext" mnemonicParsing="false" onAction="#onNextButtonClick" prefWidth="100.0" styleClass="btn-default" text="Next">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
+               </children>
+            </HBox>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                      <Label fx:id="lblFront" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" onMouseClicked="#toggleFlashcardFrontBack" prefHeight="186.0" prefWidth="478.0" styleClass="lbl-primary" textAlignment="CENTER" textFill="#fafafa">
+                          <font>
+                              <Font size="16.0" />
+                          </font>
+                  </Label>
+                      <Label fx:id="lblBack" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" onMouseClicked="#toggleFlashcardFrontBack" prefHeight="186.0" prefWidth="478.0" styleClass="lbl-info" textAlignment="CENTER" textFill="#fafafa" visible="false">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            </children>
+        </VBox>
+    </AnchorPane>
+
+
+</AnchorPane>
